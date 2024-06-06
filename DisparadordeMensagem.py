@@ -9,7 +9,6 @@ from time import sleep
 from datetime import datetime
 import pandas as pd
 import webbrowser
-import sys
 import threading
 
 # Criar uma classe para a GUI
