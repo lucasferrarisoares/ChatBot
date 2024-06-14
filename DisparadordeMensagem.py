@@ -17,13 +17,13 @@ class CourseOfferGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Disparador de Mensagem!")
-        self.root.geometry("700x600")
+        self.root.geometry("500x600")
 
 
         #TÍTULO
         app = self.root
         label = ttk.Label(app, text='Responda para começarmos!')
-        label.pack(pady=35)
+        label.pack(pady=10)
         label.config(font=('Arial', 20, 'bold'))
         style = Style(theme='superhero')
 
