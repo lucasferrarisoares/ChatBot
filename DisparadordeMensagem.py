@@ -1,3 +1,7 @@
+# Developed by: Lucas Ferrari Soares
+# Contact: lucasferrarisoares@gmail.com
+# Modo de uso, 
+
 # Importar bibliotecas necessárias
 import tkinter as tk
 from tkinter import ttk
@@ -10,6 +14,7 @@ from datetime import datetime
 import pandas as pd
 import webbrowser
 import threading
+import pyautogui
 
 
 # Criar uma classe para a GUI
@@ -83,7 +88,6 @@ class CourseOfferGUI:
 
         self.running = False
 
-
     def interromper_codigo(self):
         self.running = False
 
@@ -97,13 +101,13 @@ class CourseOfferGUI:
         t.start()
 
     def encontra_categoria(self, curso_de_envio: str) -> list:
-        #DEFINE AS CATEGORIAS
+        #DEFINE AS CATEGORIAS, ADICIONAR TODOS OS NOVOS CURSOS DA AMTECH
         Dev=["INTRODUÇÃO A LÓGICA DE PROGRAMAÇÃO", "INTRODUÇÃO A LÓGICA DE PROGRAMAÇÃO COM ALGORÍTIMOS", "Montagem e Manutenção de Computadores e Redes", "Programação, Redes e programação", 
              "SQL Linguagem de programação", "Inteligência artificial", "Cloud", "DBA", "Big Data", "Desenvolvimento web", "Programação Avançada", "Introdução a Programação", "Lógica de Programação"]
 
         Marketing=["REDES SOCIAIS: UM GUIA PRÁTICO PARA ALAVANCAR SUAS VENDAS", "CRIAÇÃO DE MÍDIAS PARA REDES SOCIAIS", "INSTAGRAM PARA NEGÓCIOS", "Marketing Digital"]      
 
-        Design=["CRIAÇÃO DE MÍDIAS PARA REDES SOCIAIS", "SKETCHUP", "Design", "SKETCHUP - DESENHOS DE AMBIENTES E OBJETOS EM 3D - NOITE", "SketchUp 3D"]
+        Design=["SKETCHUP", "Design", "SKETCHUP - DESENHOS DE AMBIENTES E OBJETOS EM 3D - NOITE", "SketchUp 3D"]
 
         Pacote_Office=["EXCEL - INTERMEDIÁRIO", "EXCEL - AVANÇADO", "PACOTE OFFICE", "Edição de Texto", "Planilha Eletrônica"]
 
@@ -146,7 +150,7 @@ class CourseOfferGUI:
             if not self.running:
                 print('Código interrompido na linha: {0}'.format(x))
                 break
-
+            #X refere-se a linha, "Dentre as opções qual curso gostaria de fazer" se trata da coluna a ser lida (ele pega pelo cabeçalho)
             cursos = alunos.loc[x, "Dentre as opções qual curso gostaria de fazer?"]
             lista_cursos = cursos.split(sep=', ')
 
@@ -161,8 +165,12 @@ class CourseOfferGUI:
                         mensagem = "Olá {0}. Nós somos da AMTECH - Agência Maringá de Tecnologia e Inovação. estamos entrando em contato pois você respondeu um formulário de interesse em cursos na área de tecnologia.\nNós iremos iniciar em parceria com o {1}, o curso {2}.\nTodos podem participar desde que sejam maior de {3} anos e tenham a escolaridade mínima 5º ano do Ensino Fundamental.\nO curso tem duração do dia {4} e será no período {5} das {6}\nAqueles que tiverem interesse, favor respondam essa mensagem, que iremos enviar o formulário para preenchimento dos dados\nATENÇÃO!\nPois as vagas são LIMITADAS!!".format(nome, parceiro, curso_de_envio, idademin, data_de_duracao, periodo, horario_do_curso)
 
                         # Criar links personalizados do whatsapp e enviar mensagens para cada cliente
-                        link_mensagem_whatsapp = f'https://api.whatsapp.com/send?phone={telefone}&text={quote(mensagem)}'
+                        link_mensagem_whatsapp = f'https://web.whatsapp.com/send/?phone={telefone}&text={quote(mensagem)}'
                         webbrowser.open(link_mensagem_whatsapp)
+                        sleep(5)
+                        # Automação para enviar a mensagem
+                        sleep(5)
+                        pyautogui.press('enter')
                         sleep(5)
                         break
             else:
@@ -176,8 +184,13 @@ class CourseOfferGUI:
                         mensagem = "Olá {0}. Nós somos da AMTECH - Agência Maringá de Tecnologia e Inovação. estamos entrando em contato pois você respondeu um formulário de interesse em cursos na área de tecnologia.\nNós iremos iniciar em parceria com o {1}, o curso {2}.\nTodos podem participar desde que sejam maior de {3} anos e tenham a escolaridade mínima 5º ano do Ensino Fundamental.\nO curso tem duração do dia {4} e será no período {5} das {6}\nAqueles que tiverem interesse, favor respondam essa mensagem, que iremos enviar o formulário para preenchimento dos dados\nATENÇÃO!\nPois as vagas são LIMITADAS!!".format(nome, parceiro, curso_de_envio, idademin, data_de_duracao, periodo, horario_do_curso)
 
                         # Criar links personalizados do whatsapp e enviar mensagens para cada cliente
-                        link_mensagem_whatsapp = f'https://api.whatsapp.com/send?phone={telefone}&text={quote(mensagem)}'
+                        link_mensagem_whatsapp = f'https://web.whatsapp.com/send?phone={telefone}&text={quote(mensagem)}'
                         webbrowser.open(link_mensagem_whatsapp)
+                        sleep(5)
+
+                        # Automação para enviar a mensagem
+                        sleep(5)
+                        pyautogui.press('enter')
                         sleep(5)
 
         print("Todas as linhas foram lidas!")
@@ -187,4 +200,3 @@ class CourseOfferGUI:
 root = tk.Tk()
 gui = CourseOfferGUI(root)
 root.mainloop()
-
