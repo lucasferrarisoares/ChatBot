@@ -1,6 +1,6 @@
 # Developed by: Lucas Ferrari Soares
 # Contact: lucasferrarisoares@gmail.com
-# Modo de uso, 
+
 
 # Importar bibliotecas necessárias
 import tkinter as tk
@@ -14,7 +14,7 @@ from datetime import datetime
 import pandas as pd
 import webbrowser
 import threading
-import pyautogui
+import pyautogui 
 
 
 # Criar uma classe para a GUI
@@ -78,11 +78,11 @@ class CourseOfferGUI:
         self.maxrange_entry = ttk.Entry(root, width=30)
         self.maxrange_entry.pack()
 
-        # Criar um botão para enviar mensagens
+        # Criar um botao para enviar mensagens
         self.send_button = ttk.Button(root, text="Enviar Mensagens", command=self.start_sending)
         self.send_button.pack(pady=10)
 
-        # Criar um botão para cancelar o código
+        # Criar um botao para cancelar o código
         self.cancel_button = ttk.Button(root, text="Interromper código", bootstyle=DANGER, command=self.interromper_codigo)
         self.cancel_button.pack(pady=10)
 
@@ -102,18 +102,15 @@ class CourseOfferGUI:
 
     def encontra_categoria(self, curso_de_envio: str) -> list:
         #DEFINE AS CATEGORIAS, ADICIONAR TODOS OS NOVOS CURSOS DA AMTECH
-        Dev=["INTRODUÇÃO A LÓGICA DE PROGRAMAÇÃO", "INTRODUÇÃO A LÓGICA DE PROGRAMAÇÃO COM ALGORÍTIMOS", "Montagem e Manutenção de Computadores e Redes", "Programação, Redes e programação", 
-             "SQL Linguagem de programação", "Inteligência artificial", "Cloud", "DBA", "Big Data", "Desenvolvimento web", "Programação Avançada", "Introdução a Programação", "Lógica de Programação"]
+        Dev=["INTRODUÇÃO A LÓGICA DE PROGRAMAÇÃO", "INTRODUÇÃO A ALGORÍTIMOS", "INTRODUÇÃO EM ROBÓTICA", "INTRODUÇÃO A UTILIZAÇÃO DE IAS E CHATBOTS DE FORMA PRODUTIVA"]
 
-        Marketing=["REDES SOCIAIS: UM GUIA PRÁTICO PARA ALAVANCAR SUAS VENDAS", "CRIAÇÃO DE MÍDIAS PARA REDES SOCIAIS", "INSTAGRAM PARA NEGÓCIOS", "Marketing Digital"]      
+        Marketing=["INSTAGRAM PARA NEGÓCIOS", "MARKETING DIGITAL", "CRIAÇÃO DE MÍDIAS PARA REDES SOCIAIS", "REDES SOCIAIS: UM GUIA PRÁTICO  PARA ALAVANCAR SUAS VENDAS"]      
 
-        Design=["SKETCHUP", "Design", "SKETCHUP - DESENHOS DE AMBIENTES E OBJETOS EM 3D - NOITE", "SketchUp 3D"]
+        Design=["INTRODUÇÃO A INOVAÇÃO E DESIGN", "CRIAÇÃO DE MÍDIAS PARA REDES SOCIAIS", "SKETCHUP - SOFTWARE CRIAÇÃO DE MODELOS EM 3D", "IMPRESSORA 3D - BÁSICO"]
 
-        Pacote_Office=["EXCEL - INTERMEDIÁRIO", "EXCEL - AVANÇADO", "PACOTE OFFICE", "Edição de Texto", "Planilha Eletrônica"]
+        Pacote_Office=["PACOTE OFFICE", "EXCEL(INTERMEDIÁRIO)", "EXCEL(AVANÇADO)"]
 
-        Basicos=["INFORMÁTICA BÁSICA (TERCEIRA IDADE)", "INTRODUÇÃO A INFORMÁTICA (WINDOWS; WORD, EXCEL; POWERPOINT E INTERNET)", "Informática básica", "Informática básica (terceira idade)", 
-                 "Informática básica a noite", "Informática básica (jovens)", "INFORMÁTICA BÁSICA (TERCEIRA IDADE) - MANHÃ", "Informatica basica a noite", "Introdução de Informática - TARDE - 22/01 à 21/02/24", 
-                 "Introdução de Informática"]
+        Basicos=["INTRODUÇÃO A INFORMÁTICA", "INFORMÁTICA BÁSICA (TERCEIRA IDADE)"]
         lista_categoria = [Dev, Marketing, Design, Pacote_Office, Basicos]
 
         Correto = None
@@ -147,51 +144,54 @@ class CourseOfferGUI:
         #essa range corresponde ao número de linhas, lembrando que vai sempre ler uma linha a menos do que a gente informar.
         for x in range(linhamin, linhamax):
 
-            if not self.running:
-                print('Código interrompido na linha: {0}'.format(x))
-                break
-            #X refere-se a linha, "Dentre as opções qual curso gostaria de fazer" se trata da coluna a ser lida (ele pega pelo cabeçalho)
-            cursos = alunos.loc[x, "Dentre as opções qual curso gostaria de fazer?"]
-            lista_cursos = cursos.split(sep=', ')
+                if not self.running:
+                    print('Código interrompido na linha: {0}'.format(x))
+                    break
+                
+                #X refere-se a linha, "Dentre as opções qual curso gostaria de fazer" se trata da coluna a ser lida (ele pega pelo cabeçalho)
+                cursos = alunos.loc[x, "Dentre as opções qual curso gostaria de fazer?"]
+                lista_cursos = cursos.split(sep=', ')
 
-            if por_grupo == "SIM":
-                categoria = self.encontra_categoria(curso_de_envio)
-                for curso in lista_cursos:
-                    if curso in categoria:
-                        # Ler planilha e guardar informações nome e telefone
-                        nome = alunos.loc[x, 'Nome Completo']
-                        telefone = int(alunos.loc[x, "Whatsapp com DDD (somente números - sem espaço)"])
+                if por_grupo == "SIM":
+                    categoria = self.encontra_categoria(curso_de_envio)
+                    for curso in lista_cursos:
+                        if curso in categoria:
+                            # Ler planilha e guardar informações nome e telefone
+                            nome = alunos.loc[x, 'Nome Completo']
+                            telefone = int(alunos.loc[x, "Whatsapp com DDD (somente números - sem espaço)"])
 
-                        mensagem = "Olá {0}. Nós somos da AMTECH - Agência Maringá de Tecnologia e Inovação. estamos entrando em contato pois você respondeu um formulário de interesse em cursos na área de tecnologia.\nNós iremos iniciar em parceria com o {1}, o curso {2}.\nTodos podem participar desde que sejam maior de {3} anos e tenham a escolaridade mínima 5º ano do Ensino Fundamental.\nO curso tem duração do dia {4} e será no período {5} das {6}\nAqueles que tiverem interesse, favor respondam essa mensagem, que iremos enviar o formulário para preenchimento dos dados\nATENÇÃO!\nPois as vagas são LIMITADAS!!".format(nome, parceiro, curso_de_envio, idademin, data_de_duracao, periodo, horario_do_curso)
+                            mensagem = "Olá {0}. Nós somos da AMTECH - Agência Maringá de Tecnologia e Inovação. estamos entrando em contato pois você respondeu um formulário de interesse em cursos na área de tecnologia.\nNós iremos iniciar em parceria com o {1}, o curso {2}.\nTodos podem participar desde que sejam maior de {3} anos e tenham a escolaridade mínima 5º ano do Ensino Fundamental.\nO curso tem duração do dia {4} e será no período {5} das {6}\nAqueles que tiverem interesse, favor respondam essa mensagem, que iremos enviar o formulário para preenchimento dos dados\nATENÇÃO!\nPois as vagas são LIMITADAS!!".format(nome, parceiro, curso_de_envio, idademin, data_de_duracao, periodo, horario_do_curso)
 
-                        # Criar links personalizados do whatsapp e enviar mensagens para cada cliente
-                        link_mensagem_whatsapp = f'https://web.whatsapp.com/send/?phone={telefone}&text={quote(mensagem)}'
-                        webbrowser.open(link_mensagem_whatsapp)
-                        sleep(5)
-                        # Automação para enviar a mensagem
-                        pyautogui.press('enter')
-                        sleep(10)
+                            # Criar links personalizados do whatsapp e enviar mensagens para cada cliente
+                            link_mensagem_whatsapp = f'https://web.whatsapp.com/send/?phone={telefone}&text={quote(mensagem)}'
+                            webbrowser.open(link_mensagem_whatsapp)
+                            sleep(5)
+                            # Automação para enviar a mensagem
+                            sleep(5)
+                            pyautogui.press('enter')
+                            sleep(5)
+                            pyautogui.hotkey('ctrl', 'w')
+                else:
+                    #olha cada item da lista criada, verifica se o curso de envio está dentro da lista, caso esteja, a planilha pega o nome e telefone do aluno, e faz o envio da mensagem.
+                    for curso in lista_cursos:
+                        if curso.upper() == curso_de_envio.upper():
+                            # Ler planilha e guardar informações nome e telefone
+                            nome = alunos.loc[x, 'Nome Completo']
+                            telefone = int(alunos.loc[x, 'Whatsapp com DDD (somente números - sem espaço)'])
 
-                        break
-            else:
-                #olha cada item da lista criada, verifica se o curso de envio está dentro da lista, caso esteja, a planilha pega o nome e telefone do aluno, e faz o envio da mensagem.
-                for curso in lista_cursos:
-                    if curso.upper() == curso_de_envio.upper():
-                        # Ler planilha e guardar informações nome e telefone
-                        nome = alunos.loc[x, 'Nome Completo']
-                        telefone = alunos.loc[x, 'Whatsapp com DDD (somente números - sem espaço)']
+                            mensagem = "Olá {0}. Nós somos da AMTECH - Agência Maringá de Tecnologia e Inovação. estamos entrando em contato pois você respondeu um formulário de interesse em cursos na área de tecnologia.\nNós iremos iniciar em parceria com o {1}, o curso {2}.\nTodos podem participar desde que sejam maior de {3} anos e tenham a escolaridade mínima 5º ano do Ensino Fundamental.\nO curso tem duração do dia {4} e será no período {5} das {6}\nAqueles que tiverem interesse, favor respondam essa mensagem, que iremos enviar o formulário para preenchimento dos dados\nATENÇÃO!\nPois as vagas são LIMITADAS!!".format(nome, parceiro, curso_de_envio, idademin, data_de_duracao, periodo, horario_do_curso)
 
-                        mensagem = "Olá {0}. Nós somos da AMTECH - Agência Maringá de Tecnologia e Inovação. estamos entrando em contato pois você respondeu um formulário de interesse em cursos na área de tecnologia.\nNós iremos iniciar em parceria com o {1}, o curso {2}.\nTodos podem participar desde que sejam maior de {3} anos e tenham a escolaridade mínima 5º ano do Ensino Fundamental.\nO curso tem duração do dia {4} e será no período {5} das {6}\nAqueles que tiverem interesse, favor respondam essa mensagem, que iremos enviar o formulário para preenchimento dos dados\nATENÇÃO!\nPois as vagas são LIMITADAS!!".format(nome, parceiro, curso_de_envio, idademin, data_de_duracao, periodo, horario_do_curso)
-
-                        # Criar links personalizados do whatsapp e enviar mensagens para cada cliente
-                        link_mensagem_whatsapp = f'https://web.whatsapp.com/send?phone={telefone}&text={quote(mensagem)}'
-                        webbrowser.open(link_mensagem_whatsapp, new=1)
-                        sleep(5)
-
-                        # Automação para enviar a mensagem
-                        pyautogui.press('enter')
-                        sleep(10)
-
+                            # Criar links personalizados do whatsapp e enviar mensagens para cada cliente
+                            link_mensagem_whatsapp = f'https://web.whatsapp.com/send?phone={telefone}&text={quote(mensagem)}'
+                            webbrowser.open(link_mensagem_whatsapp)
+                            sleep(5)
+                            # Automação para enviar a mensagem
+                            sleep(5)
+                            pyautogui.press('enter')
+                            sleep(5)
+                            pyautogui.hotkey('ctrl', 'w')
+                            
+                       
         print("Todas as linhas foram lidas!")
         self.running = False
        
