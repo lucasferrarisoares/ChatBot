@@ -1,8 +1,6 @@
-# Developed by: Lucas Ferrari Soares
-# Contact: lucasferrarisoares@gmail.com
-
-
 # Importar bibliotecas necessárias
+# pip install tkinter pandas webbrowser pyautogui ttkbootstrap
+
 import tkinter as tk
 from tkinter import ttk
 import ttkbootstrap as ttk
@@ -21,7 +19,7 @@ import pyautogui
 class CourseOfferGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("Disparador de Mensagem!")
+        self.root.title("Disparador de Mensagem 2.0")
         self.root.geometry("500x600")
 
 
@@ -80,11 +78,17 @@ class CourseOfferGUI:
 
         # Criar um botao para enviar mensagens
         self.send_button = ttk.Button(root, text="Enviar Mensagens", command=self.start_sending)
-        self.send_button.pack(pady=10)
+        self.send_button.pack(pady=7)
 
         # Criar um botao para cancelar o código
         self.cancel_button = ttk.Button(root, text="Interromper código", bootstyle=DANGER, command=self.interromper_codigo)
-        self.cancel_button.pack(pady=10)
+        self.cancel_button.pack(pady=7)
+
+        #CRÉDITOS
+        app = self.root
+        label = ttk.Label(app, text='developed by: Lucas Ferrari')
+        label.pack(pady=5)
+        label.config(font=('Arial', 7, 'bold'))
 
         self.running = False
 
@@ -160,8 +164,7 @@ class CourseOfferGUI:
                             nome = alunos.loc[x, 'Nome Completo']
                             telefone = int(alunos.loc[x, "Whatsapp com DDD (somente números - sem espaço)"])
 
-                            mensagem = "Olá {0}. Nós somos da AMTECH - Agência Maringá de Tecnologia e Inovação. estamos entrando em contato pois você respondeu um formulário de interesse em cursos na área de tecnologia.\nNós iremos iniciar em parceria com o {1}, o curso {2}.\nTodos podem participar desde que sejam maior de {3} anos e tenham a escolaridade mínima 5º ano do Ensino Fundamental.\nO curso tem duração do dia {4} e será no período {5} das {6}\nAqueles que tiverem interesse, favor respondam essa mensagem, que iremos enviar o formulário para preenchimento dos dados\nATENÇÃO!\nPois as vagas são LIMITADAS!!".format(nome, parceiro, curso_de_envio, idademin, data_de_duracao, periodo, horario_do_curso)
-
+                            mensagem = "Olá *{0}.* Nós somos da AMTECH - Agência Maringá de Tecnologia e Inovação. entramos em contato porque você demonstrou interesse em cursos de tecnologia preenchendo um formulário.📋\n\nNós iremos iniciar em parceria com o *{1}*, o curso:  \n 🌟*{2}*.🌟 \n\nTodos podem participar desde que sejam maior de *{3}* anos e tenham a escolaridade mínima 5º ano do Ensino Fundamental.🎓\n\n🎯 Duração do curso: *{4}*\n 📆 Será no período *{5}*\n 🕒 Horário: *{6}* \n\n📩 Se você está interessado, responda esta mensagem para receber o formulário de inscrição.\n\n*⚠️ Atenção: As vagas são limitadas! Responda o mais rápido possível! 🏃‍♂️💨 📢*\n\n*📍Local: Acesso 1 | Piso Superior Terminal Urbano - Av. Tamandaré, 600 - Zona 01, Maringá -*\n\n*🏫 MO curso é PRESENCIAL E 100% GRATUITO! 🎉*".format(nome, parceiro, curso_de_envio, idademin, data_de_duracao, periodo, horario_do_curso)
                             # Criar links personalizados do whatsapp e enviar mensagens para cada cliente
                             link_mensagem_whatsapp = f'https://web.whatsapp.com/send/?phone={telefone}&text={quote(mensagem)}'
                             webbrowser.open(link_mensagem_whatsapp)
@@ -179,7 +182,7 @@ class CourseOfferGUI:
                             nome = alunos.loc[x, 'Nome Completo']
                             telefone = int(alunos.loc[x, 'Whatsapp com DDD (somente números - sem espaço)'])
 
-                            mensagem = "Olá {0}. Nós somos da AMTECH - Agência Maringá de Tecnologia e Inovação. estamos entrando em contato pois você respondeu um formulário de interesse em cursos na área de tecnologia.\nNós iremos iniciar em parceria com o {1}, o curso {2}.\nTodos podem participar desde que sejam maior de {3} anos e tenham a escolaridade mínima 5º ano do Ensino Fundamental.\nO curso tem duração do dia {4} e será no período {5} das {6}\nAqueles que tiverem interesse, favor respondam essa mensagem, que iremos enviar o formulário para preenchimento dos dados\nATENÇÃO!\nPois as vagas são LIMITADAS!!".format(nome, parceiro, curso_de_envio, idademin, data_de_duracao, periodo, horario_do_curso)
+                            mensagem =  "Olá *{0}.* Nós somos da AMTECH - Agência Maringá de Tecnologia e Inovação. entramos em contato porque você demonstrou interesse em cursos de tecnologia preenchendo um formulário.📋\n\nNós iremos iniciar em parceria com o *{1}*, o curso:  \n 🌟*{2}*.🌟 \n\nTodos podem participar desde que sejam maior de *{3}* anos e tenham a escolaridade mínima 5º ano do Ensino Fundamental.🎓\n\n🎯 Duração do curso: *{4}*\n 📆 Será no período *{5}*\n 🕒 Horário: *{6}* \n\n📩 Se você está interessado, responda esta mensagem para receber o formulário de inscrição.\n\n*⚠️ Atenção: As vagas são limitadas! Responda o mais rápido possível! 🏃‍♂️💨 📢*\n\n*📍Local: Acesso 1 | Piso Superior Terminal Urbano - Av. Tamandaré, 600 - Zona 01, Maringá -*\n\n*🏫 MO curso é PRESENCIAL E 100% GRATUITO! 🎉*".format(nome, parceiro, curso_de_envio, idademin, data_de_duracao, periodo, horario_do_curso)
 
                             # Criar links personalizados do whatsapp e enviar mensagens para cada cliente
                             link_mensagem_whatsapp = f'https://web.whatsapp.com/send?phone={telefone}&text={quote(mensagem)}'
@@ -195,6 +198,11 @@ class CourseOfferGUI:
         print("Todas as linhas foram lidas!")
         self.running = False
        
+
+# Developed by: Lucas Ferrari Soares
+# Contact: lucasferrarisoares@gmail.com
+# DisparadordeMensagem 2.0    
+
 # Criar a GUI
 root = tk.Tk()
 gui = CourseOfferGUI(root)
