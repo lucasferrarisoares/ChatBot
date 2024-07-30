@@ -155,12 +155,12 @@ class CourseOfferGUI:
             lista_cursos = cursos.split(sep=', ')
 
             if por_grupo == "SIM":
-                categoria = self.encontra_categoria( curso_de_envio)
+                categoria = self.encontra_categoria(curso_de_envio)
                 for curso in lista_cursos:
                     if curso in categoria:
                         # Ler planilha e guardar informações nome e telefone
                         nome = alunos.loc[x, 'Nome Completo']
-                        telefone = alunos.loc[x, 'Whatsapp com DDD (somente números - sem espaço)']
+                        telefone = int(alunos.loc[x, "Whatsapp com DDD (somente números - sem espaço)"])
 
                         mensagem = "Olá {0}. Nós somos da AMTECH - Agência Maringá de Tecnologia e Inovação. estamos entrando em contato pois você respondeu um formulário de interesse em cursos na área de tecnologia.\nNós iremos iniciar em parceria com o {1}, o curso {2}.\nTodos podem participar desde que sejam maior de {3} anos e tenham a escolaridade mínima 5º ano do Ensino Fundamental.\nO curso tem duração do dia {4} e será no período {5} das {6}\nAqueles que tiverem interesse, favor respondam essa mensagem, que iremos enviar o formulário para preenchimento dos dados\nATENÇÃO!\nPois as vagas são LIMITADAS!!".format(nome, parceiro, curso_de_envio, idademin, data_de_duracao, periodo, horario_do_curso)
 
@@ -169,9 +169,9 @@ class CourseOfferGUI:
                         webbrowser.open(link_mensagem_whatsapp)
                         sleep(5)
                         # Automação para enviar a mensagem
-                        sleep(5)
                         pyautogui.press('enter')
-                        sleep(5)
+                        sleep(10)
+
                         break
             else:
                 #olha cada item da lista criada, verifica se o curso de envio está dentro da lista, caso esteja, a planilha pega o nome e telefone do aluno, e faz o envio da mensagem.
@@ -185,13 +185,12 @@ class CourseOfferGUI:
 
                         # Criar links personalizados do whatsapp e enviar mensagens para cada cliente
                         link_mensagem_whatsapp = f'https://web.whatsapp.com/send?phone={telefone}&text={quote(mensagem)}'
-                        webbrowser.open(link_mensagem_whatsapp)
+                        webbrowser.open(link_mensagem_whatsapp, new=1)
                         sleep(5)
 
                         # Automação para enviar a mensagem
-                        sleep(5)
                         pyautogui.press('enter')
-                        sleep(5)
+                        sleep(10)
 
         print("Todas as linhas foram lidas!")
         self.running = False
